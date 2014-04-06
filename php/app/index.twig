@@ -1,0 +1,106 @@
+{% extends "layout.twig" %}
+
+{% block title %} MicroMaki - {{ page_title }} {% endblock %}
+
+{% block head_settings %}
+    <script type="text/javascript" src="{{ app.request.basepath }}/js/home-slider-settings.js"></script>
+    <script type="text/javascript" src="{{ app.request.basepath }}/js/carousel-portfolio-settings.js"></script>
+    <script type="text/javascript" src="{{ app.request.basepath }}/js/carousel-blog-settings.js"></script>
+    <script type="text/javascript" src="{{ app.request.basepath }}/js/carousel-testimonials-settings.js"></script>
+    <script type="text/javascript" src="{{ app.request.basepath }}/js/carousel-clients-settings.js"></script>
+{% endblock %}
+
+{% block home %}
+
+{% endblock %}
+
+{% block content %}
+    <div id="wrap">
+
+        <div id="main-content" class="outerbox clearfix fitvids infinite-scroll-enabled">
+    
+    <div id="home-wrap" class="clearfix">
+        <div class="grid-loader"><i class="icon-spinner icon-spin"></i></div>
+        <div id="wpex-grid-wrap">
+        {% for entry in entries %}
+
+            {% if entry.format == 'quote' %}
+             <article class="post-{{ entry.id }} post type-post status-publish format-quote hentry category-{{ entry.categoryId }}{% for tag in attribute(entry.metadata,"tags") %} tag-{{ tag }}{% endfor %} loop-entry entry-quote isotope-item" style="position: absolute; left: 0px; top: 0px;">
+                <p>“{{ attribute(attribute(entry.metadata,"quote")|first,"text") }}.”</p>
+                <div class="entry-quote-author">- {{ attribute(attribute(entry.metadata,"quote")|first,"author") }} -</div>
+            </article>
+
+            {% elseif entry.format == 'link'  %}
+            <article class="post-{{ entry.id }} post type-post status-publish format-link hentry category-beauty tag-art tag-fashion-2 tag-make-up tag-models tag-music tag-photos loop-entry container isotope-item" style="position: absolute; left: 340px; top: 466px;">
+                <h2><a href="http://themeforest.net/user/WPExplorer" title="15% Off Lip Gloss" target="_blank">15% Off Lip Gloss</a></h2>
+                <div class="entry-text">
+
+                    <p>
+                        {% autoescape 'js' %}{% autoescape 'js' %}{{ entry.content|raw }}{% endautoescape %}{% endautoescape %}
+
+                        </p>
+                    <ul class="loop-entry-meta clearfix">
+                        <li><span class="icon-link"></span><a href="http://themeforest.net/user/WPExplorer" title="15% Off Lip Gloss" target="_blank">http://themeforest.net/user/WPExplorer</a></li>
+                    </ul>
+                </div><!-- /entry-text -->
+            </article>
+
+            {% elseif entry.format == 'gallery'  %}
+            <article class="post-{{ entry.id }} post type-post status-publish format-gallery hentry category-{{ entry.categoryId }}{% for tag in attribute(entry.metadata,"tags") %} tag-{{ tag }}{% endfor %} loop-entry grid-4 container clearfix isotope-item" style="position: absolute; left: 0px; top: 187px;">
+                <a href="{{ entry.slug }}" title="{{ entry.title }}" class="loop-entry-img-link">
+                    <img src="{{ attribute(attribute(entry.metadata,"images")|first,"url") }}" alt="{{ attribute(attribute(entry.metadata,"images")|first,"title") }}">
+                    <div class="entry-overlay"><span class="icon-picture"></span></div>
+                </a>
+                <h2><a href="{{ entry.slug }}" title="{{ entry.title }}">{{ entry.title }}</a></h2>
+                <div class="entry-text">
+                    <p>{% autoescape 'js' %}{{ entry.content|raw }}{% endautoescape %}</p>
+                    <ul class="loop-entry-meta clearfix">
+                        <li class="meta-date"><span class="icon-calendar"></span>{{ entry.datePublished|date("F jS \\a\\t g:ia") }}</li>
+                        <li class="meta-comments"><span class="icon-comment"></span> <a href="http://wpexplorer-demos.com/fashionista/hot-accessory-scarves/#comments" class="comments-link" title="Comment on Hot Accessory: Scarves">4 comments</a></li>
+                        <li class="meta-zilla-likes"><a href="#" class="zilla-likes" id="zilla-likes-115" title="Like this"><span class="zilla-likes-count">118</span> <span class="zilla-likes-postfix"></span></a></li>			</ul> <!-- /loop-entry-meta -->
+                </div><!-- /entry-text -->
+            </article><!-- /entry -->
+
+            {% elseif entry.format == 'standard'  %}
+            <article class="post-{{ entry.id }} post type-post status-publish format-standard hentry category-{{ entry.categoryId }}{% for tag in attribute(entry.metadata,"tags") %} tag-{{ tag }}{% endfor %} loop-entry container">
+                <a href="{{ entry.slug }}" title="{{ entry.title }}" class="loop-entry-img-link">
+                    <img src="{{ attribute(attribute(entry.metadata,"images")|first,"url") }}" alt="{{ attribute(attribute(entry.metadata,"images")|first,"title") }}" />
+
+                    <div class="entry-overlay"><span class="icon-plus"></span></div>
+                </a>
+                <h2><a href="{{ entry.slug }}" title="{{ entry.title }}">{{ entry.title }}</a></h2>
+                <div class="entry-text">
+                    <p>{% autoescape 'js' %}{{ entry.content|raw }}{% endautoescape %}</p>
+                    <ul class="loop-entry-meta clearfix">
+                        <li class="meta-date"><span class="icon-calendar"></span>{{ entry.datePublished|date("F jS \\a\\t g:ia") }}</li>
+                        <li class="meta-comments"><span class="icon-comment"></span> <a href="<?=$this->url('home/entry', array('slug' => 'interview33')) ?>#comments" class="comments-link"  title="Comment on Interview with a Rockstar">3 comments</a></li>
+                        <li class="meta-zilla-likes"><a href="index.html#" class="zilla-likes" id="zilla-likes-33" title="Like this"><span class="zilla-likes-count">36</span> <span class="zilla-likes-postfix"></span></a></li>           </ul> <!-- /loop-entry-meta -->
+                </div><!-- /entry-text -->
+            </article><!-- /entry -->
+
+            {% elseif entry.format == 'image'  %}
+            <article class="post-{{ entry.id }} post type-post status-publish format-image hentry category-fashion tag-art tag-fashion-2 tag-make-up tag-models tag-music tag-photos loop-entry container">
+                <a href="{{ attribute(attribute(entry.metadata,"images")|first,"url") }}" title="{{ attribute(attribute(entry.metadata,"images")|first,"title") }}" class="loop-entry-img-link fancybox">
+                    <img src="{{ attribute(attribute(entry.metadata,"images")|first,"url") }}" alt="{{ attribute(attribute(entry.metadata,"images")|first,"title") }}" />
+                    <div class="entry-overlay"><span class="icon-fullscreen"></span></div>
+                </a>
+                <h2><a href="{{ entry.slug }}" title="{{ entry.title }}">{{ entry.title }}</a></h2>
+                <div class="entry-text">
+                    <p>{% autoescape 'js' %}{{ entry.content|raw }}{% endautoescape %}</p>
+                    <ul class="loop-entry-meta clearfix">
+                        <li class="meta-date"><span class="icon-calendar"></span>{{ entry.datePublished|date("F jS \\a\\t g:ia") }}</li>
+                        <li class="meta-comments"><span class="icon-comment"></span> <a href="{{ entry.slug }}#comments" class="comments-link"  title="Comment on Keep It Simple With Black &amp; White">3 comments</a></li>
+                        <li class="meta-zilla-likes"><a href="{{ entry.slug }}#" class="zilla-likes" id="zilla-likes-164" title="Like this"><span class="zilla-likes-count">37</span> <span class="zilla-likes-postfix"></span></a></li>          </ul> <!-- /loop-entry-meta -->
+                </div><!-- /entry-text -->
+            </article><!-- /entry -->
+            {% endif %}
+        {% endfor %}
+
+        </div><!-- /wpex-grid-wrap -->
+        <div class="infinite-scroll-nav clr"><div class="alignleft newer-posts"></div><div class="alignright older-posts"><a href="{{ app.request.basepath }}/index_dev.php/page/2" >Older Posts &rarr;</a></div></div> </div><!-- /home-wrap -->
+
+    <div class="clear"></div>
+    </div><!-- /main-content -->
+    </div><!-- /wrap -->
+    
+{% endblock %}

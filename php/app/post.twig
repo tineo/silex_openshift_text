@@ -1,0 +1,13 @@
+{% extends "layout.twig" %}
+
+{% block title %} MicroMaki  {% endblock %}
+
+{% block head_settings %}
+
+{% endblock %}
+
+{% block content %}
+
+    {% include 'formats/'~  entry.format ~ '.twig' with {'entry': entry }  %}
+
+{% endblock %}

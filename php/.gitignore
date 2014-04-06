@@ -1,0 +1,6 @@
+/cache/*
+/logs/*
+/build/
+/vendor/
+/bin/
+/composer.phar
